@@ -1,0 +1,19 @@
+services:
+  redis:
+    ports:
+      - 6391:6379
+
+  core:
+    container_name: core_dev
+    image: golang:1.23
+    tty: true
+    command: ""
+    entrypoint: /bin/sh
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 8089:8080
+  postgres:
+    ports:
+      - 5430:5432
