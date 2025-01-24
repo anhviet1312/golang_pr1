@@ -9,10 +9,12 @@ type User struct {
 	LastName      string `bun:"last_name" json:"last_name"`
 	Username      string `bun:"username" json:"username"`
 	Password      string `bun:"password" json:"password"`
+	Email         string `bun:"email" json:"email"`
+	IsActive      bool   `bun:"is_active" json:"is_active"`
 }
 
 type LoginRequest struct {
-	Username string `json:"username" validate:"required,username"`
+	Username string `json:"username" validate:"required"`
 	Password string `json:"password" form:"password" validate:"required"`
 }
 
@@ -23,9 +25,15 @@ type LoginResponse struct {
 type RegisterRequest struct {
 	Email    string `json:"email" form:"email" validate:"required,email"`
 	Password string `json:"password" form:"password" validate:"required,min=6"`
-	Name     string `json:"name" form:"name" validate:"required"`
+	Username string `json:"username" form:"username" validate:"required"`
 }
 
 type RegisterResponse struct {
 	Message string `json:"message"`
+	User    *User  `json:"user"`
+}
+
+type ActivationRequest struct {
+	UserID         int64  `json:"user_id" validate:"required"`
+	ActivationCode string `json:"activation_code" validate:"required"`
 }

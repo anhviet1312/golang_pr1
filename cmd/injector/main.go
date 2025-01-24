@@ -3,6 +3,7 @@ package injector
 import (
 	"database/sql"
 	"demo-cosebase/internal/services"
+	"demo-cosebase/pkg/caching"
 	"fmt"
 	"github.com/hiendaovinh/toolkit/pkg/db"
 	"github.com/joho/godotenv"
@@ -60,6 +61,20 @@ func NewContainer(vs map[string]string) *do.Injector {
 		})
 	})
 
+	do.ProvideNamed(injector, "redis-cache", func(i *do.Injector) (redis.UniversalClient, error) {
+		clusterCacheRedisURL := os.Getenv("CLUSTER_REDIS_CACHE")
+		if clusterCacheRedisURL != "" {
+			clusterOpts, err := redis.ParseClusterURL(clusterCacheRedisURL)
+			if err != nil {
+				return nil, err
+			}
+			return redis.NewClusterClient(clusterOpts), nil
+		}
+		return db.InitRedis(&db.RedisConfig{
+			URL: os.Getenv("REDIS_CACHE"),
+		})
+	})
+
 	do.ProvideNamed(injector, "redis-cache-readonly", func(i *do.Injector) (redis.UniversalClient, error) {
 		var clusterOpts *redis.ClusterOptions
 		var err error
@@ -84,6 +99,24 @@ func NewContainer(vs map[string]string) *do.Injector {
 		return db.InitRedis(&db.RedisConfig{
 			URL: os.Getenv("REDIS_CACHE_READONLY"),
 		})
+	})
+
+	do.Provide(injector, func(i *do.Injector) (caching.Cache, error) {
+		dbRedis, err := do.InvokeNamed[redis.UniversalClient](i, "redis-cache")
+		if err != nil {
+			return nil, err
+		}
+
+		return caching.NewCacheRedis(dbRedis, false)
+	})
+
+	do.Provide(injector, func(i *do.Injector) (caching.ReadOnlyCache, error) {
+		dbRedis, err := do.InvokeNamed[redis.UniversalClient](i, "redis-cache-readonly")
+		if err != nil {
+			return nil, err
+		}
+
+		return caching.NewCacheRedis(dbRedis, false)
 	})
 
 	do.Provide(injector, func(i *do.Injector) (*services.ServiceUser, error) {
