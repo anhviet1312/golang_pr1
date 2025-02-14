@@ -1,0 +1,44 @@
+
+    <div class="book-img">
+        <a class="J-getJumpUrl" id="bookImg" href="javascript:void(0);">
+            <img src="https://img.tangthuvien.net/images/story/07e19df92fc1c25c2346c010df7972eec4a6115b6442268c281c268739e73283.jpg" onerror="this.src=&#39;https://tangthuvien.net/images/default-book.png&#39;"/>
+        </a>
+    </div>
+    <div class="book-info ">
+        <h1>Khai Cục Nữ Ma Đầu Phụ Ta (Khai Cục Nữ Ma Đầu Phụ Liễu Ngã)  - 开局女魔头负了我 (苟在女魔头身边偷偷修炼) </h1>
+        <p class="tag">
+            <a href="https://tangthuvien.net/tac-gia?author=23812" class="blue">Phạ Lạt Đích Hồng Tiêu</a>            <span class="blue">Đang ra</span>
+                                    <a href="https://tangthuvien.net/the-loai/tien-hiep" class="red" target="_blank" data-eid="qd_G10">Tiên Hiệp</a>
+                
+        </p>
+        <p class="intro">Lưu ý: Truyện thuộc &#34;cẩu đạo&#34; nên sẽ RẤT nhiều &#34;NƯỚC&#34;. Cân...</p>
+        <p>
+                        <em><span class="ULtwOOTH-like">503 </span></em><cite>Yêu thích</cite><i>|</i>
+            <em><span class="ULtwOOTH-view">5741771</span></em><cite>Lượt xem</cite><i>|</i>
+            <em><span class="ULtwOOTH-follow">2431 </span></em><cite>Theo dõi</cite><i>|</i>
+            <em><span class="ULtwOOTH-nomi">0</span></em><cite>Đề cử tháng này</cite>
+        </p><p>
+            <a class="red-btn J-getJumpUrl" href="https://tangthuvien.net/doc-truyen/khai-cuc-nu-ma-dau-phu-ta/chuong-0-1 " id="readBtn">Đọc truyện</a>
+            <a class="blue-btn add-book " id="addLikeBtn" onclick="likeStory(&#39;35224&#39;);" href="javascript:">Yêu thích</a>
+            <a class="blue-btn add-book " id="addFollowBtn" onclick="followStory(&#39;35224&#39;);" href="javascript:">Theo dõi</a>
+            <a class="blue-btn" id="topVoteBtn" href="javascript:" onclick="nominateStory(&#39;35224&#39;)" data-vote="0">Đề cử</a>
+        </p>
+    </div>
+    <div class="comment-wrap">
+        <div id="commentWrap">
+            <div class="j_getData">
+                <h4 id="j_bookScore"><span><cite id="myrate">4.7</cite></span></h4>
+                <span style="display: none">5</span>
+                <p id="j_userCount"><span id="myrating">125</span>đánh giá</p>
+            </div>
+            <h5>Ta muốn đánh giá</h5>
+            <div class="score-mid" id="scoreBtn" data-score="0" data-comment="0" data-eid="qd_G12" style="cursor: pointer; width: 116px;" onclick="openReview();">
+                                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="1" title="Quá tệ"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="2" title="Không hay lắm"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="3" title="Cũng được"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="4" title="Khá hay"/>
+                                    <img src=" https://tangthuvien.net/images/star-off.b2a1b.png " alt="5" title="Rất hay"/>
+                            </div>
+        </div>
+    </div>
+    

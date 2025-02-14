@@ -1,0 +1,46 @@
+
+    <div class="book-img">
+        <a class="J-getJumpUrl" id="bookImg" href="javascript:void(0);">
+            <img src="https://img.tangthuvien.net/images/story/3ede5e34b1f04c8d1d4ba0dc1ff1ba5aee60bb59cab829a16b0162ccdaf51713.jpg" onerror="this.src=&#39;https://tangthuvien.net/images/default-book.png&#39;"/>
+        </a>
+    </div>
+    <div class="book-info ">
+        <h1>Chư Giới Mạt Nhật Tại Tuyến  - Chư Giới Tận Thế Online - 诸界末日在线  </h1>
+        <p class="tag">
+            <a href="https://tangthuvien.net/tac-gia?author=13741" class="blue">Yên Hỏa Thành Thành</a>            <span class="blue">Đã hoàn thành</span>
+                                    <a href="https://tangthuvien.net/the-loai/khoa-huyen" class="red" target="_blank" data-eid="qd_G10">Khoa Huyễn</a>
+                
+        </p>
+        <p class="intro">Tận thế của chư giới đã tới.
+
+Ma Vương Trật Tự thu gặt...</p>
+        <p>
+                        <em><span class="ULtwOOTH-like">528 </span></em><cite>Yêu thích</cite><i>|</i>
+            <em><span class="ULtwOOTH-view">1751546</span></em><cite>Lượt xem</cite><i>|</i>
+            <em><span class="ULtwOOTH-follow">7205 </span></em><cite>Theo dõi</cite><i>|</i>
+            <em><span class="ULtwOOTH-nomi">0</span></em><cite>Đề cử tháng này</cite>
+        </p><p>
+            <a class="red-btn J-getJumpUrl" href="https://tangthuvien.net/doc-truyen/chu-gioi-tan-the-online/chuong-1 " id="readBtn">Đọc truyện</a>
+            <a class="blue-btn add-book " id="addLikeBtn" onclick="likeStory(&#39;20472&#39;);" href="javascript:">Yêu thích</a>
+            <a class="blue-btn add-book " id="addFollowBtn" onclick="followStory(&#39;20472&#39;);" href="javascript:">Theo dõi</a>
+            <a class="blue-btn" id="topVoteBtn" href="javascript:" onclick="nominateStory(&#39;20472&#39;)" data-vote="0">Đề cử</a>
+        </p>
+    </div>
+    <div class="comment-wrap">
+        <div id="commentWrap">
+            <div class="j_getData">
+                <h4 id="j_bookScore"><span><cite id="myrate">4.5</cite></span></h4>
+                <span style="display: none">5</span>
+                <p id="j_userCount"><span id="myrating">249</span>đánh giá</p>
+            </div>
+            <h5>Ta muốn đánh giá</h5>
+            <div class="score-mid" id="scoreBtn" data-score="0" data-comment="0" data-eid="qd_G12" style="cursor: pointer; width: 116px;" onclick="openReview();">
+                                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="1" title="Quá tệ"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="2" title="Không hay lắm"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="3" title="Cũng được"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="4" title="Khá hay"/>
+                                    <img src=" https://tangthuvien.net/images/star-off.b2a1b.png " alt="5" title="Rất hay"/>
+                            </div>
+        </div>
+    </div>
+    

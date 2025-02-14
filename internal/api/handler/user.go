@@ -4,7 +4,6 @@ import (
 	"context"
 	"demo-cosebase/internal/models"
 	"demo-cosebase/internal/services"
-	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/hiendaovinh/toolkit/pkg/errorx"
@@ -17,6 +16,10 @@ import (
 	"net/http"
 	"os"
 	"time"
+)
+
+const (
+	ExpireTokenDuration = time.Minute * 2
 )
 
 var googleOauthConfig = &oauth2.Config{}
@@ -118,55 +121,61 @@ func (gr *groupUser) Login(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	//fmt.Println(user)
+
 	claims := jwt.MapClaims{
-		"user_id": fmt.Sprintf("%d", user.ID),
-		"exp":     time.Now().Add(time.Minute * 5).Unix(),
+		"id":         fmt.Sprintf("%d", user.ID),
+		"email":      user.Email,
+		"username":   user.Username,
+		"first_name": user.FirstName,
+		"last_name":  user.LastName,
+		"exp":        time.Now().Add(ExpireTokenDuration).Unix(),
 	}
-	fmt.Println(claims)
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to generate token"})
 	}
-	fmt.Println(tokenString)
+
 	return c.JSON(http.StatusOK, models.LoginResponse{Token: tokenString})
 }
 
-func GoogleCallbackHandlerLogin(c echo.Context) error {
+func (gr *groupUser) GoogleCallbackHandlerLogin(c echo.Context) error {
 	code := c.QueryParam("code")
-	token, err := googleOauthConfig.Exchange(context.Background(), code)
-
+	googleToken, err := googleOauthConfig.Exchange(context.Background(), code)
 	if err != nil {
-		return httpx.RestAbort(c, nil, errorx.Wrap(fmt.Errorf("exchage code to token fail"), errorx.Invalid))
+		return httpx.RestAbort(c, nil, errorx.Wrap(fmt.Errorf("exchage code to googleToken fail"), errorx.Invalid))
 	}
 
-	userInfo, err := GetUserInfo(token.AccessToken)
+	servicesUser, err := do.Invoke[*services.ServiceUser](gr.container)
+	if err != nil {
+		return httpx.RestAbort(c, nil, errorx.Wrap(err, errorx.Service))
+	}
+
+	userInfo, err := servicesUser.GetUserInfo(googleToken.AccessToken)
 	if err != nil {
 		return httpx.RestAbort(c, nil, err)
 	}
 
-	userEmail, ok := userInfo["email"]
-	if !ok {
-		return httpx.RestAbort(c, nil, errorx.Wrap(fmt.Errorf("user email not found"), errorx.Invalid))
-	}
-
-	userSevice := do.Invoke[*services.ServiceUser]
-
-}
-
-func GetUserInfo(accessToken string) (map[string]interface{}, error) {
-	userInfoEndpoint := "https://www.googleapis.com/oauth2/v2/userinfo"
-	resp, err := http.Get(fmt.Sprintf("%s?access_token=%s", userInfoEndpoint, accessToken))
+	user, err := servicesUser.FindOrCreateUserByEmail(c.Request().Context(), userInfo)
 	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var userInfo map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
-		return nil, err
+		return httpx.RestAbort(c, nil, errorx.Wrap(err, errorx.Service))
 	}
 
-	return userInfo, nil
+	claims := jwt.MapClaims{
+		"id":         fmt.Sprintf("%d", user.ID),
+		"email":      user.Email,
+		"username":   user.Username,
+		"first_name": user.FirstName,
+		"last_name":  user.LastName,
+		"exp":        time.Now().Add(ExpireTokenDuration).Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to generate token"})
+	}
+
+	return c.JSON(http.StatusOK, tokenString)
 }

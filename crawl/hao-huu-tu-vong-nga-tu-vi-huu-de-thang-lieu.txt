@@ -1,0 +1,44 @@
+
+    <div class="book-img">
+        <a class="J-getJumpUrl" id="bookImg" href="javascript:void(0);">
+            <img src="https://img.tangthuvien.net/images/story/9aebe153e541148fe3c8136af409085386709bafe0666436e9cd88ce7867b4f4.jpg" onerror="this.src=&#39;https://tangthuvien.net/images/default-book.png&#39;"/>
+        </a>
+    </div>
+    <div class="book-info ">
+        <h1>Hảo Hữu Tử Vong: Ngã Tu Vị Hựu Đề Thăng Liễu  - 好友死亡：我修为又提升了 </h1>
+        <p class="tag">
+            <a href="https://tangthuvien.net/tac-gia?author=23890" class="blue">Lão Bà Đại Đại</a>            <span class="blue">Đã hoàn thành</span>
+                                    <a href="https://tangthuvien.net/the-loai/tien-hiep" class="red" target="_blank" data-eid="qd_G10">Tiên Hiệp</a>
+                
+        </p>
+        <p class="intro">Oanh, dựa vào cái gì ô người trong sạch, nói ta là Thiên Sát Cô...</p>
+        <p>
+                        <em><span class="ULtwOOTH-like">172 </span></em><cite>Yêu thích</cite><i>|</i>
+            <em><span class="ULtwOOTH-view">1236128</span></em><cite>Lượt xem</cite><i>|</i>
+            <em><span class="ULtwOOTH-follow">1053 </span></em><cite>Theo dõi</cite><i>|</i>
+            <em><span class="ULtwOOTH-nomi">0</span></em><cite>Đề cử tháng này</cite>
+        </p><p>
+            <a class="red-btn J-getJumpUrl" href="https://tangthuvien.net/doc-truyen/hao-huu-tu-vong-nga-tu-vi-huu-de-thang-lieu/chuong-1 " id="readBtn">Đọc truyện</a>
+            <a class="blue-btn add-book " id="addLikeBtn" onclick="likeStory(&#39;34902&#39;);" href="javascript:">Yêu thích</a>
+            <a class="blue-btn add-book " id="addFollowBtn" onclick="followStory(&#39;34902&#39;);" href="javascript:">Theo dõi</a>
+            <a class="blue-btn" id="topVoteBtn" href="javascript:" onclick="nominateStory(&#39;34902&#39;)" data-vote="0">Đề cử</a>
+        </p>
+    </div>
+    <div class="comment-wrap">
+        <div id="commentWrap">
+            <div class="j_getData">
+                <h4 id="j_bookScore"><span><cite id="myrate">4.6</cite></span></h4>
+                <span style="display: none">5</span>
+                <p id="j_userCount"><span id="myrating">41</span>đánh giá</p>
+            </div>
+            <h5>Ta muốn đánh giá</h5>
+            <div class="score-mid" id="scoreBtn" data-score="0" data-comment="0" data-eid="qd_G12" style="cursor: pointer; width: 116px;" onclick="openReview();">
+                                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="1" title="Quá tệ"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="2" title="Không hay lắm"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="3" title="Cũng được"/>
+                                    <img src=" https://tangthuvien.net/images/star-on.02731.png " alt="4" title="Khá hay"/>
+                                    <img src=" https://tangthuvien.net/images/star-off.b2a1b.png " alt="5" title="Rất hay"/>
+                            </div>
+        </div>
+    </div>
+    

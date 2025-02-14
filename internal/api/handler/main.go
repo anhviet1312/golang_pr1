@@ -34,6 +34,9 @@ func New(cfg *Config) (http.Handler, error) {
 	}
 
 	r.JSONSerializer = httpx.SegmentJSONSerializer{}
+	r.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "${time_rfc3339}\t${method}\t${uri}\t${status}\t${latency_human}\n",
+	}))
 	r.Use(middleware.Recover())
 
 	routesAPIv1 := r.Group("/api/v1")
@@ -55,7 +58,7 @@ func New(cfg *Config) (http.Handler, error) {
 			routesAPIv1User.POST("/login", u.Login)
 			routesAPIv1User.POST("/register", u.Register)
 			routesAPIv1User.POST("/activate", u.ActivateUser)
-
+			routesAPIv1User.GET("/auth/google/callback", u.GoogleCallbackHandlerLogin)
 		}
 
 	}
@@ -67,13 +70,11 @@ func New(cfg *Config) (http.Handler, error) {
 }
 
 func Hello(c echo.Context) error {
-	//Retrieve the user_id from the context
 	userID := c.Get("user_id")
 	if userID == nil {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "User ID not found in token"})
 	}
 
-	// Respond with a message including the user_id
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Hello, user!",
 		"user_id": userID,

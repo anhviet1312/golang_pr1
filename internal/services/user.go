@@ -8,6 +8,7 @@ import (
 	"demo-cosebase/internal/models"
 	"demo-cosebase/pkg"
 	"demo-cosebase/pkg/caching"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/emersion/go-sasl"
@@ -15,6 +16,7 @@ import (
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 	"golang.org/x/crypto/bcrypt"
+	"net/http"
 	"os"
 )
 
@@ -182,4 +184,54 @@ func (service *ServiceUser) ActivateUser(ctx context.Context, req *models.Activa
 	}
 
 	return true, nil
+}
+
+func (service *ServiceUser) GetUserInfo(accessToken string) (map[string]interface{}, error) {
+	userInfoEndpoint := "https://www.googleapis.com/oauth2/v2/userinfo"
+	resp, err := http.Get(fmt.Sprintf("%s?access_token=%s", userInfoEndpoint, accessToken))
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var userInfo map[string]interface{}
+	if err := json.NewDecoder(resp.Body).Decode(&userInfo); err != nil {
+		return nil, err
+	}
+
+	return userInfo, nil
+}
+
+func (service *ServiceUser) FindOrCreateUserByEmail(ctx context.Context, userInfo map[string]interface{}) (*models.User, error) {
+	email, ok := userInfo["email"]
+	if !ok {
+		return nil, errors.New("email not found")
+	}
+
+	userEmail, ok := email.(string)
+	if !ok {
+		return nil, errors.New("email is not in valid format")
+	}
+
+	user, err := datastore.FindUserByEmail(ctx, service.postgresDB, userEmail)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		return nil, err
+	}
+
+	if user == nil {
+		newUser := &models.User{
+			ID:        pkg.GenerateRandomID(),
+			Username:  userEmail,
+			Email:     userEmail,
+			FirstName: userInfo["given_name"].(string),
+			LastName:  userInfo["family_name"].(string),
+			IsActive:  true,
+		}
+		_, err = datastore.CreateUser(ctx, service.postgresDB, newUser)
+		if err != nil {
+			return nil, err
+		}
+		return newUser, nil
+	}
+	return user, nil
 }
